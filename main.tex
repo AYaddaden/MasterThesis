@@ -18,7 +18,7 @@
 \pagestyle{plain}
 \usepackage{wallpaper}
 \usepackage{mathtools}
-
+\usepackage{tabularx}
 
 
 \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
@@ -41,6 +41,8 @@
 
 \begin{document}
 
+    \listofalgorithms
+    \listoffigures
     \tableofcontents
     \newpage
     \chapter*{Introduction générale}
@@ -48,9 +50,11 @@
 	
 	\chapter{Méthodes exactes de résolution}
 	\section{Introduction}
-	La résolution de problème d'optimisation combinatoire nécessite souvent l'utilisation d'algorithmes très sophistiqués. Souvent, ces problèmes sont NP-difficile et il n'existe pas d'algorithmes polynomiaux pour leur résolution. C'est la cas par exemple du problème de sac à dos, de voyageur du commerce, de coloration de graphe, de tournée de véhicules, etc. pour lesquels une exploration exhaustive de l'espace de recherche n'est pas fructueuse. Cela nécessite donc faire une exploration intelligente de l'espace de recherche et par delà même, un choix de stratégies et de paradigmes de recherches suivant le but à atteindre. On peut donc vouloir la meilleure solution pour le problème et donc se référer aux méthodes dites \textit{"exactes"} ou bien une solution de bonne qualité et opter pour les méthodes dites \textit{"approchées"}. L'avantage des méthodes exactes est qu'elles trouvent la meilleure solution au problème mais cela au détriment d'un temps de calcul plus important. Elles sont donc privilégiées pour les petites instances. Les méthodes approchées donnent, quant à elles, une solution approximatives du problèmes tout en respectant certains critères de qualité pour la solution trouvée. Elles sont privilégiées quand le temps de calcul est borné et qu'une solution de bonne qualité seulement est suffisant. Notons aussi la combinaison des méthodes exactes et approchée est aussi un paradigme pour trouver de meilleures solutions approchées. Une revue des combinaisons de méthodes exactes et approchées peut être trouvée dans \cite{Puchinger2005}. Dans la suite, nous nous intéressons aux méthodes exactes de résolution de problèmes d'optimisation combinatoire et particulièrement aux méthodes d'exploration arborescentes de l'espace de recherche. 
-	%Chercher ce qui motive à utiliser ces méthodes pour justifier le fait qu'on en parle ici.
+	La résolution de problème d'optimisation combinatoire nécessite souvent l'utilisation d'algorithmes très sophistiqués. Souvent, ces problèmes sont NP-difficile et il n'existe pas d'algorithmes polynomiaux pour leur résolution. C'est la cas par exemple du problème de sac à dos, de voyageur du commerce, de coloration de graphe, de tournée de véhicules, etc. pour lesquels une exploration exhaustive de l'espace de recherche n'est pas fructueuse. Cela nécessite donc faire une exploration intelligente de l'espace de recherche et par delà même, un choix de stratégies et de paradigmes de recherches suivant le but à atteindre. On peut donc vouloir la meilleure solution pour le problème et donc se référer aux méthodes dites \textit{"exactes"} ou bien une solution de bonne qualité et opter pour les méthodes dites \textit{"approchées"}. L'avantage des méthodes exactes est qu'elles trouvent la meilleure solution au problème mais cela au détriment d'un temps de calcul plus important. Elles sont donc privilégiées pour les petites instances. Les méthodes approchées donnent, quant à elles, une solution approximatives du problèmes tout en respectant certains critères de qualité pour la solution trouvée. Elles sont privilégiées quand le temps de calcul est borné et qu'une solution de bonne qualité seulement est suffisant. Notons aussi la combinaison des méthodes exactes et approchée est aussi un paradigme pour trouver de meilleures solutions approchées. Une revue des combinaisons de méthodes exactes et approchées peut être trouvée dans \cite{Puchinger2005}. 
+	\paragraph{}
+	Dans la suite, nous nous intéressons aux méthodes exactes de résolution de problèmes d'optimisation combinatoire et particulièrement aux méthodes d'exploration arborescentes de l'espace de recherche. 
 	%conclure avec une bref enumération des méthodes qu'on va aborder.
+	La reste de ce chapitre est organisé comme suit. D'abord on donnera une description du branch-and-bound et l'esquisse de l'algorithme. Les principales phases de l'algorithme seront elles aussi abordées. Ensuite, c'est le branch-and-cut qui sera abordé. On verra comment il diffère du branch-and-bound classique et quels choix sont cruciaux à faire dans cet algorithme. Enfin, la dernière variante est abordée. Il s'agit du branch-and-price. On verra aussi dans ce cas sur quel méthodes il repose et quels sont les choix qu'il incombe de faire au moment de sa conception. Dans les trois cas, quelques cas d'utilisation sont cités pour donner une idée de l'étendue de l'application de ces algorithmes.
 	 
 	\section{Branch and bound} \label{bb}
 	\subsection{Description la méthode}
@@ -682,16 +686,16 @@
 	\chapter{Les heuristiques primitives}
 	
 	\section{Introduction}
-	Le programmation mathématique est une branche des techniques d’optimisation d’une grande utilité pour la résolution exacte d’un problème de maximisation ou de minimisation.  Beaucoup de problèmes d’optimisation peuvent se formuler en un programme mathématique tels que les problème de transport, de réseaux de télécommunication, ordonnancement…\cite{Gamrath2015}. Il est donc intéressant de pouvoir exploiter cette structure pour la résolution du problème, d’où un intérêt pour trouver des algorithmes de résolution des programmes mathématiques. Toutefois, en raison du nombre important de variables, le temps d’exécution peut vite exploser et passer de quelques secondes à des heures voir des années. En particulier, on parle plus de programmation linéaire avec toutes ses variantes : en nombres entiers, en nombre mixtes (variables entières et réelles), en nombres binaires (variables prenants seulement 0 ou 1 comme valeurs). Le cas non-linéaire est discuté dans \cite{berthold2014heuristic}.
+	Le programmation mathématique est une branche des techniques d’optimisation d’une grande utilité pour la résolution exacte d’un problème de maximisation ou de minimisation.  Beaucoup de problèmes d’optimisation peuvent se formuler en un programme mathématique tels que les problème de transport, de réseaux de télécommunication, ordonnancement, etc.\cite{Gamrath2015}. Il est donc intéressant de pouvoir exploiter cette structure pour la résolution du problème, d’où un intérêt pour trouver des algorithmes de résolution des programmes mathématiques. Toutefois, en raison du nombre important de variables, le temps d’exécution peut vite exploser et passer de quelques secondes à des heures voir des années. En particulier, on parle plus de programmation linéaire avec toutes ses variantes : en nombres entiers, en nombre mixtes (variables entières et réelles), en nombres binaires (variables prenants seulement 0 ou 1 comme valeurs). Le cas non-linéaire est discuté dans \cite{berthold2014heuristic}.
 	
 	\paragraph{}
 	Les heuristiques primitives sont un aspect important de la programmation linéaire. Ces heuristiques permettent de générer des solutions faisables de bonnes qualité en des temps d’exécution relativement courts ou d’améliorer une solution trouvée pour la rapprocher de l’optimalité. Ces heuristiques sont propres au domaine de la programmation mathématique et nécessite donc de trouver une formulation en programme linéaire du problème qu’on souhaite minimiser (ou maximiser) pour pouvoir les appliquer. 
 	
 	\paragraph{}
-	Beaucoup de solveurs commerciaux et open-source tels que SCIP ou IBM CPLEX proposent des implémentations des heuristiques primitives et font appel à elles au cours de la résolution des programmes linéaires. Dans cite{Berthold2018}, Berthold donne les résultats de tests sur des benchmarks de la littérature dans lesquels il montre l’impacte des heuristiques  primitives sur l’accélération de la résolution des programmes linéaires. 
+	Beaucoup de solveurs commerciaux et open-source tels que SCIP ou IBM CPLEX proposent des implémentations des heuristiques primitives et font appel à elles au cours de la résolution des programmes linéaires. Dans \cite{Berthold2018}, Berthold donne les résultats de tests sur des benchmarks de la littérature dans lesquels il montre l’impacte des heuristiques  primitives sur l’accélération de la résolution des programmes linéaires. 
 	
 	\paragraph{}
-	Dans ce qui suit, on va d’abord faire un rappel sur quelques notions de la programmation linéaire. Notamment la définition d’un programme linéaires, les types de programmes linéaires, et on définit aussi une solution dite \textit{"faisable"}. Puis, on va aborder les heuristiques primitives en se basant principalement sur les travaux de Achterberg et Berthhold \cite{berthold2006}. On suivra la même classification qui y est proposée . Enfin, on verra quelques applications concrètes sur des problèmes d’optimisations combinatoires et les notamment les intégration dans les framework de Branch-and-price pour lesquels elles semblent présenter des très bonnes améliorations.
+	Dans ce qui suit, on va d’abord faire un rappel sur quelques notions de la programmation linéaire. Notamment la définition d’un programme linéaires, les types de programmes linéaires et la définition d'une solution dite \textit{"faisable"}. Puis, on va aborder les heuristiques primitives en se basant principalement sur les travaux de Achterberg et Berthhold \cite{berthold2006}. On suivra la même classification qui y est proposée. Enfin, on présentera quelques résultats de tests sur l'efficacité de ces heuristiques.
 	
 	\section{Rappels sur les programmes linéaires}
 	\paragraph{}
@@ -765,26 +769,26 @@
 
 	\section{Les heuristiques primitives}
 	\subsection{Définition}
-	Selon Lee et Mitchell \cite{Lee2001}: \textit{"The term primal heuristics refers to certain LP-based procedures for constructing integral feasible solutions from points that are in some sense good, but fail to satisfy integrality. Typically, these nonintegral points are obtained as optimal solutions of LP relaxations. Primal heuristic procedures involve successive variable fixing and rounding (according to rules usually governed by problem structure) and subsequent resolves of the 			modified primal LP".}
+	Selon \cite{Lee2001}: \textit{"The term primal heuristics refers to certain LP-based procedures for constructing integral feasible solutions from points that are in some sense good, but fail to satisfy integrality. Typically, these nonintegral points are obtained as optimal solutions of LP relaxations. Primal heuristic procedures involve successive variable fixing and rounding (according to rules usually governed by problem structure) and subsequent resolves of the 			modified primal LP".}
 	\paragraph{}
-	Les heuristiques primitives sont donc des heuristiques appliquées aux MIPs. Elles visent à trouver des solutions de bonnes qualités sans pour autant garantir l’optimalité. Les premiers travaux sur les heuristiques pour les programmes linéaires sont dus à Gomory \cite{gomory1958} en 1958. Une heuristique appelée Pivot-and-complement à aussi été proposée par Balas et Martin pour les programmes en nombres binaires (BP) \cite{Balas1980}. Le principe du pivot est basé sur l’observation qu’une solution faisable est une solution de la relaxation du programme linéaire où les variables binaires sont hors bases (en utilisant la méthode du simplexe) et donc les variables d’écart seulement sont basiques. L’heuristique de pivot essaie donc de transformer un maximum de variables binaires en variables hors base tout en gardant le solution faisable et en altérant le moins possible la fonction objectif. Par la suite, l’heuristique a connu plusieurs améliorations et une généralisation pour les programmes linéaires en nombres mixtes. Dans la suite, nous nous intéresserons aux heuristiques primitives implémentées dans les solveurs. Nous les aborderons selon le classement fait par Berthold \cite{berthold2006}.
+	Les heuristiques primitives sont donc des heuristiques appliquées aux MIPs. Elles visent à trouver des solutions de bonnes qualités sans pour autant garantir l’optimalité. Les premiers travaux sur les heuristiques pour les programmes linéaires sont dus à \cite{gomory1958}. Une heuristique appelée Pivot-and-complement à aussi été proposée par Balas et Martin pour les programmes en nombres binaires (BP) \cite{Balas1980}. Le principe du pivot est basé sur l’observation qu’une solution faisable est une solution de la relaxation du programme linéaire où les variables binaires sont hors bases (en utilisant la méthode du simplexe) et donc les variables d’écart seulement sont basiques. L’heuristique de pivot essaie donc de transformer un maximum de variables binaires en variables hors base tout en gardant le solution faisable et en altérant le moins possible la fonction objectif. Par la suite, l’heuristique a connu plusieurs améliorations et une généralisation pour les programmes linéaires en nombres mixtes. Dans la suite, nous nous intéresserons aux heuristiques primitives implémentées dans les solveurs tel que SCIP.
 	
 	\paragraph{}
-	Hendel \cite{Hendel2011} cite certaines heuristiques triviales. Celles-ci sont des heuristiques directes qui n'ont pas besoin de beaucoup de calculs et appliquent une logique plutôt simple. Hendel les décrit comme parfaite pour prétraitement si l'on veut avoir une solution de départ. Parmi celles citées, on retrouve:
+	\cite{Hendel2011} cite certaines heuristiques triviales. Celles-ci sont des heuristiques directes qui n'ont pas besoin de beaucoup de calculs et appliquent une logique plutôt simple. Hendel les décrit comme parfaite pour les phases de pré-traitement si l'on veut avoir une solution de départ. Parmi celles citées, on retrouve:
 	
 	\begin{itemize}
 		\item La solution zero pour laquelle $x_j \gets 0 \forall j \in N$
 		\item La solution à borne supérieure $x_j \gets u_j \forall j \in N $
 		\item La solution à borne inférieure $x_j \gets l_j \forall j \in N $
 	\end{itemize}
-	\subsection{Les heuristiques plongeantes}
-	Dites aussi heuristiques Relax-and-fix \cite{fischetti2010heuristics}. Elles peuvent être vues comme un parcours Depth-first-search dans un arbre branch and bound \cite{Bertholda}. Ces heuristiques commencent avec une solution LP-faisable du problème relaxé. Dans cette solution où les variables entières sont fractionnelles, soit $x_j$ la variable choisie. On change soit sa borne supérieure $u_j$ par $\floor{x_j}$ soit sa borne inférieure $l_j$ par $\ceil{x_j}$. A chaque itération, on résoudre la relaxation du nouveau problème ainsi défini. Une certaine condition d’arrêt doit être vérifiée. En général, on s’arrête quand le problème est infaisable ou bien si la solution trouvée est pire que la solution actuelle ou le temps d’exécution qui est borné. D’autres conditions d’arrêt peuvent être prises en compte telle que la profondeur du parcours dans l’arbre du branch and bound ou tout autre condition qu’on peut imposer au problème.
-	On peut classer les heuristiques plongeantes en heuristiques dites \textit{« Hard diver »} où on continue à plonger plus en profondeur dans l'arbre Branch and bound. La deuxième classe autorise le \textit{« backtracking »} jusqu'à un certain niveau, c’est à dire qu’au bout d’une certaine condition comme la profondeur ou l’infaisabilité, on remonte dans l’arbre du branch and bound pour chercher de meilleurs solutions \cite{fischetti2010heuristics}. Contrairement aux autres règles de branchement dans les algorithmes de branch and bound qui tendent à choisir la meilleure subdivision du problème, les heuristiques plongeantes favorisent l’accès à une solution faisable le plus tôt possible.
+	\subsection{Les heuristiques en profondeur}
+	Dites aussi heuristiques Relax-and-fix \cite{fischetti2010heuristics}. Elles peuvent être vues comme un parcours rechercher en profondeur d'abord (Depth-first-search) dans un arbre branch and bound \cite{Bertholda}. Ces heuristiques commencent avec une solution LP-faisable du problème relaxé. Dans cette solution où les variables entières sont fractionnelles, soit $x_j$ la variable choisie. On change soit sa borne supérieure $u_j$ par $\floor{x_j}$ soit sa borne inférieure $l_j$ par $\ceil{x_j}$. A chaque itération, on résoudre la relaxation du nouveau problème ainsi défini. Une certaine condition d’arrêt doit être vérifiée. En général, on s’arrête quand le problème est infaisable ou bien si la solution trouvée est pire que la solution actuelle ou le temps d’exécution qui est borné. D’autres conditions d’arrêt peuvent être prises en compte telle que la profondeur du parcours dans l’arbre du branch and bound ou tout autre condition qu’on peut imposer au problème.
+	On peut classer les heuristiques en profondeur en heuristiques dites \textit{« Hard diver »} où on continue à explorer plus en profondeur l'arbre Branch-and-bound. La deuxième classe autorise le \textit{« backtracking »} ou le retour en arrière jusqu'à un certain niveau, c’est à dire qu’au bout d’une certaine condition comme la profondeur ou l’infaisabilité, on remonte dans l’arbre du branch-and-bound pour chercher de meilleurs solutions \cite{fischetti2010heuristics}. Contrairement aux autres règles de branchement dans les algorithmes de branch-and-bound qui recherchent la meilleure subdivision du problème, les heuristiques en profondeur favorisent l’accès à une solution faisable le plus tôt possible.
 	\paragraph{}
 	L’algorithme général se présente comme suit :
 	
 	\begin{algorithm}
-		\caption{Algorithme général des heuristiques plongeantes}
+		\caption{Algorithme général des heuristiques en profondeur}
 		\SetAlgoLined
 		\DontPrintSemicolon
 		
@@ -807,29 +811,29 @@
 		
 	\end{algorithm}
 
-	Les critères d'arrêt sont une combinaison de ceux énoncé plus haut ou bien d'autres définis selon les besoins et le problème. L'étape 10 de mises à jour pour tester les critères d'arrêt induit l'introduction de variables supplémentaires omises dans l'énoncé de l'algorithme pour pouvoir garder l'idée général. Les heuristiques plongeantes interviennent plus dans l'étape 3 de sélection de la variable $x_j$ et l'étape 4 de modification d'une des bornes. La résolution du MIP peut se faire via l'algorithme du simplexe ou le dual du simplexe. 
+	Les critères d'arrêt sont une combinaison de ceux énoncé plus haut ou bien d'autres définis selon les besoins et le problème. L'étape 10 de mises à jour pour tester les critères d'arrêt induit l'introduction de variables supplémentaires omises dans l'énoncé de l'algorithme pour pouvoir garder l'idée général. Les heuristiques en profondeur interviennent plus dans l'étape 3 de sélection de la variable $x_j$ et l'étape 4 de modification d'une des bornes. La résolution du MIP peut se faire via l'algorithme du simplexe ou le dual du simplexe. 
 	
 	\paragraph{}
 	Dans la suite, 
 	\begin{itemize}
 		\item $\hat{x}$ désigne une solution LP-faisable du MIP. 
-		\item $\dot{x}$ la solution LP-faisable à la racine de l'arbre Branch and bound.
-		\item $\tilde{x}$ la meilleure solution trouvée dans l'arbre Branch and bound.
+		\item $\dot{x}$ la solution LP-faisable à la racine de l'arbre Branch-and-bound.
+		\item $\tilde{x}$ la meilleure solution trouvée dans l'arbre Branch-and-bound.
 	\end{itemize}
 	
 
 	\paragraph{}
-	La littérature contient plein d'algorithmes, ils diffèrent principalement sur le critère de sélection des variables à fixer. Ci-dessous, on présente des variantes et leurs critères de sélection des variables.
+	La littérature rescense beaucoup d'algorithmes de descente en profondeur, ils diffèrent principalement sur le critère de sélection des variables à fixer. Ci-dessous, on présente des variantes et leurs critères de sélection des variables.
 	%list of divers
 	\paragraph{}
 	\textit{Fractional diving}: On définit la fractionnalité $f$ d'une variable $x_j$ telle que $j \in I$ comme suit:
 	\[
 		f(x_j) = \abs{x_j - \floor{x_j+0.5}}
 	\]
-	Dans \textit{fractional diving}, la variable $x_j$ sélectionnée est celle qui a la plus petite fractionnalité $f(x_j)$. Elle est ensuite arrondie au plus proche entier. C'est cet entier qui constituera la nouvelle borne.
+	Dans \textit{fractional diving}, la variable $x_j$ sélectionnée est celle qui a la plus petite partie fractionnaire $f(x_j)$. Elle est ensuite arrondie au plus proche entier. C'est cet entier qui constituera la nouvelle borne.
 
 	\paragraph{}
-	\textit{Coefficient diving}: Cette heuristique travaille le nombre de verrous d'une variable $x_j$. Le nombre de verrous d'une variable $x_j$ est le nombre de contraintes violées en arrondissant la variable soit à l'entier supérieur, soit à l'entier inférieur. On choisit donc la variable $x_j$ qui minimise le nombre de verrous. Et on l'arrondie du côté où ce minimum est atteint. Dans le cas où il y a plusieurs variables qui satisfont ce minimum, on prend celle qui a la plus petite franctionnalité $f(x_j)$.
+	\textit{Coefficient diving}: Cette heuristique travaille sur le nombre de verrous d'une variable $x_j$. Le nombre de verrous d'une variable $x_j$ est le nombre de contraintes violées en arrondissant la variable soit à l'entier supérieur, soit à l'entier inférieur. On choisit donc la variable $x_j$ qui minimise le nombre de verrous. Et on l'arrondie du côté où ce minimum est atteint. Dans le cas où il y a plusieurs variables qui satisfont ce minimum, on prend celle qui a la plus petite franctionnalité $f(x_j)$.
 
 	\paragraph{}
 	\textit{Linesearch diving}: On compare la solution $\dot{x}$ au nœud racine du problème relaxé à la solution $\hat{x}$ du nœud actuel en ne considérant que les variables $\hat{x}_j \neq \dot{x}_j$. Pour cela, on définit une fonction la fonction $Q_j$ suivante:
@@ -842,24 +846,24 @@
 	La variable sélectionnée est $x_j$ telle que $Q_j$ soit la minimale possible. La direction pour l'arrondir est celle où elle atteint ce minimum.
 
 	\paragraph{}
-	\textit{Guided diving}: La sélection de variable $x_j$ obéit à la même règle que dans fractional diving. Sauf que dans guided diving, on a besoin de la meilleure solution trouvée jusqu'ici, à savoir $\tilde{x}$. La variable $x_j$ sélectionnée est génère une borne dans la même direction que $\tilde{x}_j$, c'est-à-dire $\ceil{x_j}$ si $ x_j \textgreater \tilde{x}_j $ ou $\floor{x_j}$ si $ x_j \textless \tilde{x}_j $.
+	\textit{Guided diving}: La sélection de variable $x_j$ obéit à la même règle que dans fractional diving. Sauf que dans guided diving, on a besoin de la meilleure solution trouvée jusqu'ici, à savoir $\tilde{x}$. La variable $x_j$ sélectionnée génère une borne dans la même direction que $\tilde{x}_j$, c'est-à-dire $\ceil{x_j}$ si $ x_j \textgreater \tilde{x}_j $ ou $\floor{x_j}$ si $ x_j \textless \tilde{x}_j $.
 	
 	\paragraph{}
-	\textit{Pseudocost diving}: Pseudocost donne une indication de taux de changement de la fonction objectif quand la variable $x_j$ sélectionnée change.
+	\textit{Pseudocost diving}: Pseudocost donne une indication sur le taux de changement de la fonction objectif quand la variable $x_j$ sélectionnée change.
 	Pour plus de détails sur la définition mathématique du pseudocost d'une variable $x_j$, se référer à \cite{martin1999integer}
 	Soient $p^+_j$ le \text{up-pseudocost} et $p^-_j$ le \text{down-pseudocost} calculés grâce aux formules dans \cite{martin1999integer}. Le pseudocost total d'une variable $x_j$ est défini par $ \phi_j = \alpha^+_j p^+_j + \alpha^-_j p^-_j$ où $\alpha^+_j$ et $\alpha^-_j$ sont des scalaires. La variable $x_j$ choisie est celle qui maximise $\phi_j$. La direction à laquelle la borner est déterminée selon les trois règles suivantes:
 	\begin{enumerate}
 		\item Si $\abs{\hat{x}_j - \dot{x}_j} \textgreater 0.4$ appliquer la même politique que dans \textit{Linesearch diving}
 		\item Si 1 n'est pas satisfaite, considérer la $f(x_j)$ la fractionnalité de la variable $x_j$. Si $min(f_j) \textless 0.3$ la variable est bornée à la direction où elle atteint ce minimum.
-		\item Si 1 et 2 ne sont pas satisfaits, $x_j$ est bornée à la direction du plus petit pseudocost. Si $p^+_j \textgreater p^-_j$ la borne considérée est celle avec l'arrondi en bas, sinon c'est l'arrondi en haut qui est considéré. 
+		\item Si 1 et 2 ne sont pas satisfaits, $x_j$ est bornée à la direction du plus petit pseudocost. Si $p^+_j \textgreater p^-_j$ la borne considérée est celle avec l'arrondi inférieurement, sinon c'est l'arrondi supérieur qui est considéré. 
 	\end{enumerate}
 	
 	\paragraph{}
 	\textit{Objective pseudocost diving}: Cette heuristique applique les mêmes règles de sélection de variable $x_j$ que dans \textit{pseudocost diving} mais elle tiens compte du coefficient $c_j$ correspondant à $x_j$ dans la fonction objectif. Celui-ci est modifié de la sorte:
 	\[
 		\hat{c}_j = \begin{cases}
-				1000 (d+1) \abs{c_j} & \text{Si} x_j \text{est arrondi en bas} \\
-				-1000 (d+1) \abs{c_j} & \text{Si} x_j \text{ est arrondi en haut} \\
+				1000 (d+1) \abs{c_j} & \text{Si} x_j \text{est arrondi inférieurement} \\
+				-1000 (d+1) \abs{c_j} & \text{Si} x_j \text{ est arrondi supérieurement} \\
 		\end{cases}
 	\]
 	$d$ représente la profondeur auquel l'heuristique plongeante est arrivée dans l'arbre.
@@ -962,16 +966,16 @@
 	
 	\subsection{Les heuristiques d'arrondissement}
 	%principe général des 
-	Selon Berthold \cite{Bertholda}, les heuristiques d'arrondissement prennent en entrée une solution LP-faisable et contenant des variables fractionnelles et tentent de les arrondir vers des valeurs entières. Il est clair que plus le nombre d'arrondissement possible double avec chaque variable fractionnelle \cite{berthold2006}, il est donc nécessaire d'avoir une stratégie d'arrondissement. C'est dans ce but qu'interviennent les heuristiques d'arrondissement en réduisant le nombre de variables fractionnelles de un (1) à chaque itération tout en veillant à ce que la solution reste LP-faisable. L'une des stratégie les plus simples données par Berthold est d'arrondir $x_j$ en bas,c'est-à-dire prendre $\floor{x_j}$, si $c_j \textgreater 0$ et d'arrondir en haut, c'est-à-dire sélectionner $\ceil{x_j}$, si $c_j \textless 0 $. Ce choix est motivé par le fait qu'on a un problème de minimisation, ces choix d'arrondissement garantissent que la fonction objectif n'est pas tirée du côté d'un maximum. 
-	La différence avec les heuristiques plongeantes est qu'ici, on fixe $x_j$ à une valeur entière au lieu de fixer l'une de ses bornes, et que le problème n'est pas ré-optimisé à chaque itération. Ces heuristiques sont aussi plus rapides.
+	Selon Berthold \cite{Bertholda}, les heuristiques d'arrondissement prennent en entrée une solution LP-faisable contenant des variables fractionnelles et tentent de les arrondir. Il est clair que le nombre d'arrondissement possible double avec chaque variable fractionnelle \cite{berthold2006} et il est donc nécessaire d'avoir une stratégie d'arrondissement. C'est dans ce but qu'interviennent les heuristiques d'arrondissement en réduisant le nombre de variables fractionnelles de un (1) à chaque itération tout en veillant à ce que la solution reste LP-faisable. L'une des stratégie les plus simples données par Berthold est d'arrondir $x_j$ inférieurement,c'est-à-dire prendre $\floor{x_j}$, si $c_j \textgreater 0$ et d'arrondir supérieurement, c'est-à-dire sélectionner $\ceil{x_j}$, si $c_j \textless 0 $. Ce choix est motivé par le fait qu'on a un problème de minimisation, ces choix d'arrondissement garantissent que la fonction objectif n'est pas tirée du côté d'un maximum. 
+	La différence avec les heuristiques en profondeur réside dans le fait de fixer $x_j$ à une valeur entière au lieu de fixer l'une de ses bornes, et que le problème n'est pas ré-optimisé à chaque itération. Ces heuristiques sont aussi plus rapides.
 	 
 	
 	%list des arrondis
 	\paragraph{}
-	Les heuristiques d'arrondissement présentées ici sont introduites par Berthold et Achterberg \cite{berthold2006} et par Hendel \cite{Hendel2011} dans le solveur open-source SCIP.
+	Les heuristiques d'arrondissement présentées ici ont été introduites par Berthold et Achterberg \cite{berthold2006} et par Hendel \cite{Hendel2011} dans le solveur open-source SCIP.
 	
 	\paragraph{}
-	\textit{Simple Rounding:} Cette heuristique garde le principe de celle présenté en haut mais au lieu d'arrondir pour minimiser la fonction objectif, on arrondi pour garantir qu'aucune des contraintes linéaires ($A x \textless b$) n'est violée. Pour cela on regarde la colonne $A_.j$ correspondant à la variable $x_j$. Si celle-ci est positive ($ \forall a_{.j } \in A_{.j}, \hspace{10pt} a_{.j } \geq 0 $) alors $x_j$ est arrondie en bas. Dans le cas où elles est négative ($ \forall a_{.j } \in A_{.j }, \hspace{10pt} a_{.j } \leq 0 $) $x_j$ est arrondie en haut. La procédure peut être résumé dans l'algorithme suivant.
+	\textit{Simple Rounding:} Cette heuristique garde le principe de celle présenté plus haut mais au lieu d'arrondir pour minimiser la fonction objectif, on arrondi pour garantir qu'aucune des contraintes linéaires ($A x \textless b$) n'est violée. Pour cela on regarde la colonne $A_.j$ correspondant à la variable $x_j$. Si celle-ci est positive ($ \forall a_{.j } \in A_{.j}, \hspace{10pt} a_{.j } \geq 0 $) alors $x_j$ est arrondie inférieurement. Dans le cas où elles est négative ($ \forall a_{.j } \in A_{.j }, \hspace{10pt} a_{.j } \leq 0 $) $x_j$ est arrondie supérieurement. La procédure peut être résumé dans l'algorithme suivant.
 	
 	\begin{algorithm}
 		\caption{Algorithme Simple rounding}
@@ -995,7 +999,7 @@
 	\end{algorithm}
 
 	\paragraph{}
-	\textit{Rounding: } Cette heuristique est très similaire à \textit{Simple rounding}, sauf qu'elle autorise des contraintes linéaire à être violées. Dans ce cas, elle réduit le nombre de contraintes violée en faisant d'autres arrondissement sur d'autres variables.
+	\textit{Rounding: } Cette heuristique est très similaire à \textit{Simple rounding}, sauf qu'elle autorise des contraintes linéaire à être violées. Dans ce cas, elle réduit le nombre de contraintes violée en faisant d'autres arrondissement sur d'autres variables (Algorithme \ref{rounding}).
 	On définit les deux variables suivantes qui donnent le nombre de coefficients positifs et négatifs respectivement dans une colonne $A_{.j}$:
 	\begin{itemize}
 		\item[] $ ul_j = \text{card}\{a_{ij} | a_{ij} \textgreater 0 \} $ 
@@ -1005,8 +1009,7 @@
 	\end{itemize}
 	Le terme \textit{lock} désignera soit $ul_j$ ou $dl_j$.
 	
-	L'algorithme peut être résumé dans ces lignes:
-		\begin{algorithm}
+		\begin{algorithm} \label{rounding}
 			\caption{Algorithme Rounding}
 			\SetAlgoLined
 			\DontPrintSemicolon
@@ -1035,17 +1038,16 @@
 		
 		\end{algorithm}
 
-	L'action pour résoudre la violation d'une ligne peut paraître confuse en pseudo-algorithme. Voici un exemple pour éclaircir.
-	Supposons que nous avons deux variables $x_j$ et $x_i$ $ i \neq j$ qui peuvent résoudre la violation et que l'action correspondant à $x_j$ est de l'arrondir en haut et l'action correspondants à $x_i$ est de l'arrondir en bas. Dans ce cas, pour $x_j$ on retient le nombre $dl_j$ comme \textit{lock} et pour $x_i$, on retient le nombre $ul_i$ comme \textit{lock}. $x_j$ est sélectionnée si $dl_j \textless ul_i$, sinon c'est $x_i$ qui est sélectionnée.  
-	
-	Pour plus de détails sur l'algorithme, se référer à \cite{berthold2006}.
-	
-	\paragraph{}
-	\textit{Shifting:} cette heuristique suit la même logique que dans \textit{Rounding} sauf que quand une ligne est violée s'il n'y a pas de variables fractionnelle à sélectionner dans la procédure de réparation, une variable $x_j$ entière est sélectionnée et ensuite on la remplace par la valeur entière à laquelle elle n'a pas été arrondie \textit{(shift operation)}. L'algorithme exacte peut être retrouvé dans \cite{berthold2006}
+	\textbf{Exemple:}
+	Supposons que nous avons deux variables $x_j$ et $x_i$ $ i \neq j$ qui peuvent résoudre la violation et que l'action correspondant à $x_j$ est de l'arrondir supérieurement et l'action correspondants à $x_i$ est de l'arrondir inférieurement. Dans ce cas, pour $x_j$ on retient le nombre $dl_j$ comme \textit{lock} et pour $x_i$, on retient le nombre $ul_i$ comme \textit{lock}. $x_j$ est sélectionnée si $dl_j \textless ul_i$, sinon c'est $x_i$ qui est sélectionnée.  
 	
 	
 	\paragraph{}
-	\textsc{Rens:} abréviation de \textit{"Relaxation Enforced Neighborhood Search"}, cette heuristiques créée et résout le sous-MIP suivant:
+	\textit{Shifting:} cette heuristique suit la même logique que celle de l'heuristique \textit{Rounding} sauf que quand une ligne est violée s'il n'y a pas de variables fractionnelle à sélectionner dans la procédure de réparation, une variable $x_j$ entière est sélectionnée et ensuite on la remplace par la valeur entière à laquelle elle n'a pas été arrondie \textit{(shift operation)} \cite{berthold2006}.
+	
+	
+	\paragraph{}
+	\textsc{Rens:} abréviation de \textit{"Relaxation Enforced Neighborhood Search"}, cette heuristique résout le sous-MIP suivant:
 	\begin{equation}
 		\begin{aligned}
 		\text{min} \hspace{10pt}  c^T x \\
@@ -1059,12 +1061,12 @@
 	Notons que dans ce sous-MIP, certains des variables $x_j$ sont fixées. La procédure \textsc{Rens} de résolution de ce sous-MIP n'est déclenchée qui si un certain nombre de variables est fixé quand on change les bornes. Ceci garantit que le sous-MIP à résoudre est plus facile que le MIP originel. Si le sous-MIP est résolu jusqu'à optimalité, la solution trouvée est la meilleur que puisse générer n'importe quel algorithme d'arrondissement \cite{berthold2006}.
 	
 	\paragraph{}
-	\textit{ZI round:} Cette heuristique est définie par Wallace dans \cite{Wallace2009} comme une extension de \textit{Simple rounding}. Une implémentation de cette heuristique a aussi été proposée dans le solveur SCIP par Hendel \cite{Hendel2011}. 
+	\textit{ZI round:} Cette heuristique a été proposée par \cite{Wallace2009} comme une extension de \textit{Simple rounding}. Une implémentation de cette heuristique a aussi été proposée dans le solveur SCIP par Hendel \cite{Hendel2011}. 
 	A partir de la fractionnalité $f_j$ d'une variable $x_j$ définie pour l'heuristiques \textit{fractional diving}, on définie la fractionnalité d'une solution $x = (x_1, x_2, ..., x_n)$, notée $ZI$ dans \cite{Wallace2009} (d'où le nom de l'heuristique), comme étant la somme de toutes les fractionnalités ses variables $x_j$ avec $j \in I$.
 	\[
 		ZI(x) = \sum_{j \in I} f_j
 	\]
-	Une solution $x$ est donc entières faisable si et seulement si $ZI(x) = 0$. Par conséquent, le but de l'heuristique \textit{ZI round} est de réduire $ZI(x)$ à zéro.
+	Une solution $x$ est donc entière faisable si et seulement si $ZI(x) = 0$. Par conséquent, le but de l'heuristique \textit{ZI round} est de réduire $ZI(x)$ à zéro.
 	Pour cela Wallace définie un déplacement positif  $x_j + \delta x_j$, $\delta x_j \textgreater 0$ avec lequel on peut déplacer la variable $x_j$ tout en maintenant le problème LP-faisable. $\delta x_j$ satisfait:
 	\[
 		\delta x_j \leq ub := \mini_{i} \bigg\{\frac{s_i}{a_{ij}} \hspace{5pt} | \hspace{5pt} a_{ij} \textgreater 0 \bigg\}
@@ -1074,7 +1076,7 @@
 	\[
 		\delta x_j \leq UB := \min\{ub,u_j - x_j\}
 	\]
-	De manière analogue, le déplacement négatif $x_j - \delta x_j $ est défini est borné par les expressions suivantes.
+	De manière analogue, le déplacement négatif $x_j - \delta x_j $ est défini et borné par les expressions suivantes.
 	On défini $lb$ :
 	\[
 		lb := \mini_{i} \bigg\{\frac{- s_i}{a_{ij}} \hspace{5pt} | \hspace{5pt} a_{ij} \textless 0 \bigg\}
@@ -1083,25 +1085,22 @@
 	\[
 		\delta x_j \leq LB := \min\{lb,x_j - l_j\}
 	\]
-	L'heuristique cherche sélectionne la variable $x_j$ avec un déplacement négatif $LB$ ou positif $UB$ de sorte que $ZI(x | x_j + UB) \textless ZI(x)  $  ou $ZI(x | x_j - LB) \textless ZI(x)$. $x_j$ est alors modifiée dans le sens où elle réduit la fractionnalité du vecteur solution $x$. L'algorithme s'arrête quand aucune amélioration n'est possible. 
+	L'heuristique sélectionne la variable $x_j$ avec un déplacement négatif $LB$ ou positif $UB$ de sorte que $ZI(x | x_j + UB) \textless ZI(x)  $  ou $ZI(x | x_j - LB) \textless ZI(x)$. $x_j$ est alors modifiée dans le sens où elle réduit la fractionnalité du vecteur solution $x$. L'algorithme s'arrête quand aucune amélioration n'est possible. 
 	% discussion des résultats de tests et le meilleurs
 	
 	\subsection{Les heuristiques de propagation}
 	\paragraph{}
-	Les heuristiques de propagation sont des heuristiques qui exploitent un arbre Banch-and-bound auxiliaire qu'elles génèrent. Cet arbre auxiliaire est parcouru en utilisant des techniques de fixation et de propagation seulement. Elles peut être vue comme une technique de prétraitement car elles ne nécessitent pas de solution LP-faisable au départ pour démarrer à l'inverse des heuristiques plongeantes et d'arrondissement. A chaque itération, une variable $x_j$ (de préférence binaire) est choisie pour être fixée à une valeur. Le choix de la variable se fait de sorte à réduire l'infaisabilité du programme linéaire. On peut toujours pour cela utiliser les techniques vues pour l'arrondissement des variables. La fixation est alors \textit{propagée} pour réduire le domaine d'autres variables. Si la propagation provoque l'infaisabilité du problème induit par celle-ci, une procédure de \textit{backtracking} remet $x_j$ à son ancienne valeur. \\
+	Les heuristiques de propagation sont des heuristiques qui exploitent un arbre Banch-and-bound auxiliaire qu'elles génèrent. Cet arbre auxiliaire est parcouru en utilisant des techniques de fixation et de propagation seulement. Elles peut être vue comme une technique de pré-traitement car elles ne nécessitent pas de solution LP-faisable au départ pour démarrer à l'inverse des heuristiques en profondeur et d'arrondissement. A chaque itération, une variable $x_j$ (de préférence binaire) est choisie pour être fixée à une valeur. Le choix de la variable se fait de sorte à réduire l'infaisabilité du programme linéaire. On peut toujours pour cela utiliser les techniques vues pour l'arrondissement des variables. La valeur fixée est alors \textit{propagée} pour réduire le domaine d'autres variables. Si la propagation provoque l'infaisabilité du problème induit par celle-ci, une procédure de \textit{backtracking} remet $x_j$ à son ancienne valeur. \\
 	\paragraph{}
 	\textbf{Exemple:} Soit la contrainte linéaire suivante:\\
 	\[
 		x_1 + 2 x_2 + 7 x_3 \leq 10 
 	\]
 	
-	Il est clair que si $x_3$ est fixé à 1, les valeurs de $x_2 \geq 2 $ ne sont plus admissibles. Donc, la fixation de la valeur de $x_3$ à 1 à été \textit{propagée} à $x_2$. De plus si $x_1$ est fixée à 3, cette valeur est automatiquement propagée vers $x_2$, qui cette fois-ci s'annule tout bonnement.
+	Il est clair que si $x_3$ est fixé à 1, les valeurs de $x_2 \geq 2 $ ne sont plus admissibles. Donc, la valeur de $x_3$ fixée à 1 à été \textit{propagée} à $x_2$. De plus si $x_1$ est fixée à 3, cette valeur est automatiquement propagée vers $x_2$, qui cette fois-ci s'annule tout bonnement.
 	
 	\paragraph{}
-	Pour plus de détails sur la propagation, voir le chapitre 7 de \cite{Achterberg2007a} sur \text{Domain propagation}.
-
-	\paragraph{}
-	Berthold et Hendel ont introduit dans \cite{Berthold2014} une heuristique appelée \textit{Shift-and-Propagate}. Pour cela, les auteurs font une modification dans le problème et introduisent la RN-forme définie comme suit:
+	\cite{Berthold2014} ont introduit une heuristique appelée \textit{Shift-and-Propagate}. Pour cela, les auteurs font une modification dans le problème et introduisent la RN-forme définie comme suit:
 	\begin{definition} \label{def:rnform}
 		Un MIP admet une RN-forme si il est sous la forme standard et:
 		\begin{itemize}
@@ -1126,11 +1125,11 @@
 	\vspace{5pt}
 	Dans la pratique, ces 3 critères sont en conflit. On peut très bien définir un voisinage qui contient des solutions de qualité mais qui est difficile à visiter.
 	\paragraph{}
-	Dans la suite, on aborde quelques heuristiques d'amélioration définies dans la littérature.
+	Dans ce qui suit, nous présentons quelques heuristiques d'amélioration définies dans la littérature.
 	% liste 
 	
 	\paragraph{}
-	\textit{Local Branching:} Cette heuristique fut introduit par Fischetti et Lodi \cite{fischetti2003local} en observant que le voisinage de la meilleure solution $\tilde{x}$ trouvée à un certain niveau de parcours en terme de distance de Manhattan contient des solutions avec possibilité qu'elles soient bien meilleures. Ils définissent alors le \textit{k-voisinage} d'un point $x$
+	\textit{Local Branching:} Cette heuristique a été proposée par \cite{fischetti2003local} en observant que pour une solution donnée \tilde{x}, si on défini son voisinage avec la distance de Manhattan alors celui-ci est susceptible de contenir des solutions de meilleur qualité (Algorithme \ref{local_branching}). Ils définissent alors le \textit{k-voisinage} d'un point $x$
 	\begin{definition} \label{def:kneighborhood}
 		Soient $ x \in \R^n$ avec $ x_j \in \Z \hspace{7pt} \forall j \in I $ et $k \in \N$. L'ensemble
 
@@ -1143,9 +1142,7 @@
 		 
 	\end{definition}
 
-	Ainsi, l'algorithme de Local Branching peut être formulé ainsi:
-	
-	\begin{algorithm}
+	\begin{algorithm} \label{local_branching}
 		\caption{Algorithme Local Branching}
 		\SetAlgoLined
 		\DontPrintSemicolon
@@ -1174,17 +1171,15 @@
 	Comme dans \textsc{Rens}, la résolution du sous-problème définit dans \textsc{Rins} ne se fait que si le cardinal de $E$ atteint une certaine valeur minimale fixée.
 	
 	\paragraph{}
-	\textit{Mutation:} Cette heuristique prend en entrée soit la meilleure solution trouvée ou bien n'importe quelle autre solution LP-Faisable. Notons-la $\tild{x}$.
+	\textit{Mutation:} Cette heuristique prend en entrée soit la meilleure solution trouvée ou bien n'importe quelle autre solution LP-Faisable. Notons-la $\tilde{x}$.
 	Parmi toutes les variables entières dans $\tilde{x}$ on sélectionne un pourcentage de $\nu $ au hasard. On créée alors un MIP à partir du MIP originel auquel on ajoute les contraintes $ x_j  = \tilde{x}_j$ parmi les $\nu$ \% sélectionnées. On résout le MIP ainsi généré. Il est clair que c'est la définition de $\nu$ qui constitue le paramètre crucial de la réussite de cet algorithme. 
 		
 	\paragraph{}
-	\textit{Crossover:} L'idée de cette heuristique généralise celle de \textsc{Rins}. Au lieu de comparer la meilleure solution trouvée avec celle LP-faisable générée au nœud actuel, cette heuristique prend plusieurs points LP-faisables et fixe les variables qui ont des valeurs communes.
+	\textit{Crossover:} cette heuristique généralise celle de \textsc{Rins}. Au lieu de comparer la meilleure solution trouvée avec celle LP-faisable générée au nœud actuel, cette heuristique prend plusieurs points LP-faisables et fixe les variables qui ont des valeurs communes (Algorithme \ref{crossover}).
 	
 	Soient $K =  \{\hspace{5pt}1...\kappa \hspace{5pt}\} \hspace{10pt} \kappa \in \N $ et  $X = \{\hspace{5pt} x^k \hspace{5pt} : k \in K \hspace{5pt}\}$ l'ensemble des solutions LP-faisables sélectionnées.
-	
-	L'algorithme \textit{Crossover} peut alors se résumer ainsi:
-	
-	\begin{algorithm}
+
+	\begin{algorithm}\label{crossover}
 		\caption{Algorithme Crossover}
 		\SetAlgoLined
 		\DontPrintSemicolon
@@ -1217,10 +1212,10 @@
 	\section{Mesure des performances des heuristiques primitives}
 	%introducing primal integral because one cannont judge impact of the primal heuristics on the whole problem but only in the region where it was applied. So we can't take into account some details like total execution time, quality of solution induced by the whole solving strategy ...
 	\paragraph{}
-	Dans le processus de résolution des MIP, 3 mesures temporelles peuvent êtres prises en considération: le temps pour trouver la première solution faisable, le temps pour trouver la meilleure solution et le temps pour trouver un solution de bonne qualité (qui est éloigné d'une valeur $\epsilon$ de la meilleure solution). Bien que ces trois mesures soient très importantes et donnent de informations sur la procédure utilisée en général, elles présentent chacune des lacunes. Par exemple, le premier temps donne plus une estimation sur le temps que passe le solveur à résoudre la relaxation du MIP au nœud racine alors que le deuxième temps peut être d'une trop longue durée bien que l'algorithme ait croisé une solution de très bonne qualité bien plus tôt mais l'a ignoré. Pour le troisième temps, il faut considérer à fixer le $\epsilon$ arbitrairement. Aucune de ces trois mesures n'est donc efficace pour donner une bonne estimation pour les heuristiques primitives et donc ne laissent pas apprécier à sa juste valeur leur contribution dans le processus de résolution. Rappelons tout de même que le but des heuristiques primitives est de pouvoir trouver une première solution faisable de bonne qualité au MIP. Achterberg et al. \cite{Achterberg2012} ont proposé une mesure qui tient compte de tout le processus de résolution. Cette mesure prend en considération la qualité et le temps auquel ces solutions faisables sont trouvées. Pour cela ils introduisent la notion de \textit{intégral primitive} (\textit{primal integral}) que nous allons détailler ici.
+	Dans le processus de résolution des MIP, 3 mesures temporelles peuvent êtres prises en considération: le temps pour trouver la première solution faisable, le temps pour trouver la meilleure solution et le temps pour trouver un solution de bonne qualité (qui est éloigné d'une valeur $\epsilon$ de la meilleure solution). Bien que ces trois mesures soient très importantes et donnent des informations sur la procédure utilisée en général, elles présentent chacune des lacunes. Par exemple, le premier temps donne plus une estimation sur le temps que passe le solveur à résoudre la relaxation du MIP au nœud racine alors que le deuxième temps peut être d'une trop longue durée bien que l'algorithme ait croisé une solution de très bonne qualité bien plus tôt mais l'a ignoré. Pour le troisième temps, il faut considérer à fixer le $\epsilon$ arbitrairement. Aucune de ces trois mesures n'est donc efficace pour donner une bonne estimation pour les heuristiques primitives et donc ne permettent pas d'apprécier à sa juste valeur leur contribution dans le processus de résolution. Rappelons tout de même que le but des heuristiques primitives est de pouvoir trouver une première solution faisable de bonne qualité au MIP. \cite{Achterberg2012} ont proposé une mesure qui tient compte de tout le processus de résolution. Cette mesure prend en considération la qualité et le temps auquel ces solutions faisables sont trouvées. Pour cela ils introduisent la notion de \textit{intégral primitive} (\textit{primal integral}) que nous allons détailler ici.
 	
 	\paragraph{}
-	On note par $x_{opt}$ la solution optimale (ou la meilleure qui est connue) du MIP et par $\tild{x}$ une solution faisable du MIP. On définit alors la fonction $\gamma \in [0,1]$ par:
+	On note par $x_{opt}$ la solution optimale (ou la meilleure qui est connue) du MIP et par $\tilde{x}$ une solution faisable du MIP. On définit alors la fonction $\gamma \in [0,1]$ par:
 	
 	\[
 		\gamma(\tilde{x}) = \begin{cases}
@@ -1230,7 +1225,7 @@
 		\end{cases}
 	\]
 
-	Soit $t_{max} \in \R^+$ le temps maximum auquel on exécute le solveur pour résoudre le MIP. On définit ainsi en fonction du temps la fonction:\\
+	Soit $t_{max} \in \R^+$ le temps maximum durant lequel on exécute le solveur pour résoudre le MIP. On définit ainsi en fonction du temps la fonction:\\
 	$p: [0, t_{max}] \rightarrow [0, 1]$
 	\[
 		t \rightarrow p(t) := \begin{cases}
@@ -1254,9 +1249,9 @@
 		\caption{Illustration de la fonction \textit{Intégrale primitive}}
 		\label{fig:primalintegral}
 	\end{figure}
-	Au début de l'exécution, on a pas de solution, donc $p(t)$ prend la valeur 1. Au fil de l'exécution, à chaque solution trouvée, $p(t)$ se met à jour et diminue. Quand une solution optimale est trouvée, elle prend la valeur 0. L'intégrale primitive de cette fonction est la surface délimitée par $p(t)$ et les deux axes. Achterberg et al. \cite{Achterberg2012} suggèrent d'utiliser cette fonction pour mesurer l'évolution des heuristiques primitives via les solutions qu'elles trouvent à des instants $t$. Plus $P(t_{max}) $ est petit, meilleure est la solution trouvée. 
+	Au début de l'exécution, on a pas de solution, donc $p(t)$ prend la valeur 1. Au fil de l'exécution, à chaque solution trouvée, $p(t)$ se met à jour et diminue. Quand une solution optimale est trouvée, elle prend la valeur 0. L'intégrale primitive de cette fonction est la surface délimitée par $p(t)$ et les deux axes. \cite{Achterberg2012} suggèrent d'utiliser cette fonction pour mesurer l'évolution des heuristiques primitives via les solutions qu'elles trouvent à des instants $t$. Plus $P(t_{max}) $ est petit, meilleure est la solution trouvée. 
 	
-	Cette mesure à été testée par Achterberg et al. dans \cite{Achterberg2012} et par Berthold dans \cite{Berthold2013} sur des instances de la littérature pour mesurer l'effet des heuristiques primitives sur le processus de résolution de MIP. Berthold conclue dans \cite{Berthold2013} que l'utilisation des heuristiques primitives sur ces instances améliore le résultat de 78.8 \% pour le solveur SCIP et de 86.5 \% pour IBM \textsc{Cplex}. Dans \cite{Achterberg2012}, Achterberg et al. concluent qu'utiliser un mélange d'heuristiques primitives coûteuses en temps avec d'autres pas très gourmandes en temps d'exécution donne de meilleurs résultats qu'utiliser des heuristiques coûteuses toutes seules. Ce dernier s'avère aussi meilleur qu'utiliser que des heuristiques pas coûteuses en temps. Ils tirent aussi la même conclusion que précédemment, à savoir, qu'utiliser des heuristiques primitives donne de meilleure résultats que ne pas les utiliser. Cette mesure est aussi reprise dans \cite{Khalil2017} où le but est de trouver un moyen de prédire où et quand il serait intéressant de lancer une heuristique primitive dans un arbre branch and bound. Le modèle présenter fait appel à des techniques d'apprentissage machine (\text{Machine learning}) pour savoir connaître le succès ou l'échec de l'appel de l'heuristiques sur le un nœud donné.
+	Cette mesure à été testée par \cite{Achterberg2012} et par \cite{Berthold2013} sur des instances de la littérature pour mesurer l'effet des heuristiques primitives sur le processus de résolution de MIP. \cite{Berthold2013} que l'utilisation des heuristiques primitives sur ces instances améliore le résultat de 78.8 \% pour le solveur SCIP et de 86.5 \% pour IBM \textsc{Cplex}. Dans \cite{Achterberg2012}, les auteurs concluent qu'hybrider des heuristiques primitives coûteuses en temps avec d'autres pas très gourmandes en temps d'exécution donne de meilleurs résultats qu'utiliser des heuristiques coûteuses toutes seules. Ce dernier s'avère aussi meilleur qu'utiliser des heuristiques pas coûteuses en temps. Ils tirent aussi la même conclusion que précédemment, à savoir, qu'utiliser des heuristiques primitives donne de meilleure résultats que ne pas les utiliser. Cette mesure est aussi reprise dans \cite{Khalil2017} où le but est de trouver un moyen de prédire où et quand il serait intéressant de lancer une heuristique primitive dans un arbre branch and bound. Le modèle présenter fait appel à des techniques d'apprentissage (\text{Machine learning}) pour mesurer l'effet de l'appel de l'heuristique sur le un nœud donné.
 	     
 	\section{Résultats des tests et comparaison entre les heuristiques primitives}
 	
@@ -1265,18 +1260,101 @@
 	%liste des papiers et quelques de leurs résultats généraux
 	
 	\section{Conclusion}
-	Nous avons vu dans ce chapitre les heuristiques primitives et comment elles fonctionnent. On suivi pour cela la même classification proposée par \cite{berthold2006} à savoir les heuristiques plongeantes qui changent à chaque fois les bornes des variables jusqu'à ce qu'elle soient fixées et la plus sophistiquée d'entre elles Feasibility Pump dans ses deux versions, les heuristiques d'arrondissement qui décident d'arrondir les variables fractionnelles soit en haut soit en bas et ceci selon différents critères. Les heursitiques de propagation qui exploitent un arbre branch-and-bound auxiliaire avec des techniques de fixation et de propagation et les heuristiques d'amélioration qui commencent par une solution faisable en entrée qu'elles tentent d'améliorer. Nous avons aussi vu que pour mesurer l'impact de ces heuristiques, une fonction intégrale primitive à aussi été introduite. Elle permet de connaitre l'apport des fonctions primitives par rapport au schéma global de résolution du MIP. Selon les résultats, ces heuristiques sont prometteuses et permettent d'obtenir des solution faisable de qualité. 
+	Nous avons vu dans ce chapitre les heuristiques primitives et comment elles fonctionnent. On suivi pour cela la même classification proposée par \cite{berthold2006} à savoir les heuristiques en profondeur qui changent à chaque fois les bornes des variables jusqu'à ce qu'elle soient fixées et la plus sophistiquée d'entre elles Feasibility Pump dans ses deux versions, les heuristiques d'arrondissement qui décident d'arrondir les variables fractionnelles soit supérieurement soit inférieurement et ceci selon différents critères. Les heursitiques de propagation qui exploitent un arbre branch-and-bound auxiliaire avec des techniques de fixation et de propagation et les heuristiques d'amélioration qui commencent par une solution faisable en entrée qu'elles tentent d'améliorer. Nous avons aussi vu que pour mesurer l'impact de ces heuristiques, une fonction intégrale primitive à aussi été introduite. Elle permet de connaitre l'apport des fonctions primitives par rapport au schéma global de résolution du MIP. Selon les résultats, ces heuristiques sont prometteuses et permettent d'obtenir des solution faisable de qualité. 
 	
 	\chapter{Utilisation des heuristiques primitives dans la résolution de problèmes d'optimisation}
 	
 	\section{Introduction}
+	Les heuristiques primitives sont des heuristiques venant du domaine de la programmation en nombre mixte (MIP). Elles ont donné d'assez bon résultats sur les benchmarks de la littérature des MIP \cite{berthold2006}, \cite{Achterberg2012}. \cite{Berthold2013} considère même que c'est l'un des aspects les plus importants des solveurs commerciaux de nos jours: \textit{"On the other hand, the solver vendors, such as Cplex, Gurobi or Xpress, seem to consider primal heuristics to be a "trade secret". It stays unrevealed which heuristics they use, when they are called, or just how many of them a solver features, whereas, for other components, there are plenty of user parameters and statistical outputs available. One interpretation of this discrepancy might be that primal heuristics are considered a - if not the - crucial part of the software, and their value is simply not reflected by the performance measures that we commonly use."} En effet, tous ceux qui utilisent un solveur commercial ou open-source tel que SCIP utilise d'une manière ou d'une autre les heuristiques primitives. Peu d'articles dans la littérature font mention du choix d'utilisation des heuristiques primitives dans la conception d'une solution à un problème d'optimisation. A ma connaissance, il n'y a eu aucun survey qui relate une telle utilisation pour des problèmes d'optimisation combinatoire. Ce chapitre a pour modeste but de combler un tant soit peu ce vide en recensant quelques cas d'utilisation fructueux des heuristiques primitives. Le choix des articles s'est fait sous la mention de l'heuristique utilisée donc les articles mentionnant un l'utilisation d'un solveur commercial ou open-source pour moteur de résolution de la formulation mathématique du problème ne sont pas pris en compte puisqu'il n'est pas dit quelle heuristique primitive a été utilisée. De plus, pour des mesures d'efficacités, certains on tendance à les désactiver car elles ont tendance à cacher l'effet d'autres heuristiques sur la qualité de la solution générée. Le reste du chapitre est organisé comme suit. Dans la section 2, quelques utilisation préliminaires sont répertoriées. Ce sont les premières heursitiques primitives développées. Dans la section 3, on aborde les heuristiques primitives utilisées dans les problèmes de tournées. Dans la section 4, celles utilisées dans les problèmes de réseaux sont revues.  Dans les section 5, quelques autres problèmes sont présentés avec les heuristiques primitives employées dans la résolution. Enfin, dans la section 6, un tableau récapitulatif des problèmes et des heuristiques primitives utilisées est présenté.  
 	
-	\section{}
 	
+	\section{Premières utilisations}
+	Comme cité en introduction, les heuristiques primitives ont longtemps été présentes dans les solveurs. Par conséquent, toute implémentation les utilisant pour les problèmes d'optimisation les utilise plus ou moins involontairement et sous réserve qu'elles n'aient pas été désactivées. Néanmoins, quelques utilisations précoces peuvent être répertoriées. C'est la cas par exemple de l'heuristique primitive de Toyoda \cite{Toyoda1975}. C'est une heuristique conçue pour les problèmes en variables binaires pour lesquelles elle affecte une mesure appelée \textit{"Gradient effectif"}. Toyoda l'applique à une problème de sac à dos multidimensionnel. Les résultats des tests prouvent que la méthode est efficace pour donner des solutions approximatives avec un taux d'erreur décroissant au fur et à mesure que les instances deviennent grandes. De plus, le temps de calcul est mineur même pour de larges instances. 
+	\cite{Loulou1979} s'inspire de l'heuristique de Toyoda pour le même problème et modifie l'heuristique de sélection de la prochaine variable à insérer.
+	
+	\cite{Holmberg} traite le problème d'emplacement d'installation. Ce problème vise à répondre à la question: Quel est le meilleur emplacement pour une installation?. Il mentionne pour cela l'utilisation d'une heuristiques nommée \textit{ADD} \cite{Domschke1985}. ADD est un algorithme glouton qui répète l'étape suivante: augmenter la taille du site $i$ qui donne la plus grande réduction du coût total. La procédure se termine quand aucune réduction n'est possible. L'algorithme ne donne pas de bons résultats, néanmoins, une amélioration de l'algorithme avec des règles de priorités existe et qui améliore quelqeu peu les résultats.
+
+    
+	\section{Heuristiques primitives dans les problèmes de tournées}
+	    
+	\section{Heuristiques primitives dans les problèmes de conception de réseaux}
+	
+	
+	\section{Heuristiques primitives dans les autres problèmes d'optimisation}
+	    Hors les trois derniers problèmes mentionnés pour laquelle il y a eu plus de littérature, il existe certaines autres applications encore isolées pour des problèmes d'optimisation. Elles sont toutes récentes compte tenu du fait que les heuristiques primitives sont en émergence. C'est pour cela qu'il devient intéressant de constater  l'étendue de l'efficacité de ces heuristiques appliquées à ces problèmes.
+	    
+	    \paragraph{Ordonnancement de l'admission des patients}
+	    
+	    Ce problème consiste à trouver l'affectation à un lit d'hôpital pour la durée de leur séjour se basant sur les besoins médicaux et les préférences des patients. Un modèle mathématique pour ce problèmes a été proposé par \cite{Ceschia2011}. \cite{Turhan2017} développe deux heuristiques en se servant de la formulation mathématique précédente. Il s'agit de Fix-and-relax (F\&R) et Fix-and-Optimize (F\&O). Une revue de la littérature sur l'utilisation de ces heuristiques sur d'autres problème est faite par le même auteur. Ces deux heuristiques se basent sur les MIPs avec comme principe de décomposer le problème initial en sous-problèmes. L'auteur utilise une décomposition suivant le temps et en patients. F&R génère une solution initiale qu'elle passe à F&O pour l'améliorer.
+	    Les heuristiques ont été testé sur les benchmark de Demeester (https://people.cs.kuleuven.be/~wim.vancroonenburg/pas/). Les tests ont révélé que la fonction objectif a un écart de 5 à 15 pourcent des la meilleure solution connue en un temps raisonnable.  
+	    
+	    \paragraph{Le problème des (r|p)-centroïdes discrets}
+	    
+	    Ce problème modélise un leader et son concurrent qui sont en compétition pour attirer des clients vers leur marché et maximiser les gains. Au début, le leader ouvre $p$ installations et le concurrent $r$ installation. \cite{Alekseeva2010} mentionne que c'est un jeu de Stackelberg non-coopératif. L'auteur donne la formulation mathématique du problème et propose une méthode exacte itérative au problème. L'une des étapes de cet algorithme cherche la solution optimale d'un problème défini par un sous-ensemble de contraintes. Cette partie étant très coûteuse en temps, Alekseeva et al. la remplacent par un autre problème de faisabilité plus facile à résoudre et ne nécessitant pas une preuve d'optimalité. Pour le résoudre \cite{Alekseeva2010} propose d'utiliser Feasibility pump de \cite{Fischetti2005}. Les résultats de l'auteur ne sont pas vraiment concluent puisque les concurrent obtient plus de 50\% du marché dans tous les benchmarks. Néanmoins, le problème de faisabilité à été résolu avec succès à chaque itération avec feasibility pump.
+	    
+	    \paragraph{Le problème d'emplacement de hub}
+            
+            Selon \cite{Alumur2008}, ce problème se concentre sur la localisation des installations de hub et l'allocation de noeuds clients (trafic réseau) vers le hub et depuis le hub vers le destinataire.  Deux type de réseau de hub existent: a) avec allocation unique où tous les signaux allant et venant d'un centre passent par un seul hub. b) avec multiple allocation où chaque centre peut envoyer et recevoir des signaux à partir de plusieurs hub. La littérature sur le sujet assume trois suppositions sur le problème:
+            \begin{enumerate}
+                \item Le réseau du hub est complet (i.e. il y a un lien entre chaque pair de hub);
+                \item Il y a des économies à réaliser à faire des connexions inter-hub;
+                \item Aucun service direct entre les centre n'est permis.
+            \end{enumerate}
+            
+            \cite{He2015} propose une heuristique nommée IMMIP \textit{(IMproved MIP)} se basant sur le branch-and-bound, la relaxation lagrangienne et la programmation linéaire. Il décrit cette heuristique comme étant similaire certaines heursitiques primitives dont feasibility pump, \textsc{Rins}, \textsc{Rens} et relax-and-fix. Par conséquent, même si ce n'est pas explicitement mentionné dans l'article, on peut supposer que c'est aussi une heuristique primitive.
+          
+            Selon \cite{He2015}, l'heuristique IMMIP génère une solution initiale faisable et une solution relaxée du MIP (la LP-relaxation) et après utilise ces solutions pour construire une fonction de probabilité qui va fixer les variables entières.
+          
+            L'auteur offre aussi une étude théorique comparative entre l'heuristique IMMIP et les autres heuristiques primitives dont il s'inspire. IMMIP est similaire aux heuristiques primitives dans le fait qu'elles créent toutes un sous-MIP où une partie des variables entières est fixé puis ce sous-MIP est résolu pour obtenir une solution faisable au MIP originel. La différence entre cette heuristique et les heuristiques primitives est la façon dont les solutions sont utilisées pour construire les sous-MIP.      
+            
+            Les résultats des tests montrent que l'heuristique IMMIP offre des solution de qualité supérieure à celles des autres heuristiques primitives avec des écarts avec la solution optimale plus stables que celui des autres méthodes. He et al. envisagent même d'étendre la méthode à d'autres problèmes ayant une formulation en MIP.
+            
+	    \paragraph{Problème du voyageur du commerce}
+	    
+	        Plus précisément, il s'agit du problème du voyageur du commerce avec dépendances temporelle qui est traité dans \cite{hansknecht2018cuts}. Cette variante généralise le problème du voyageur du commerce, en plus de prendre en considération le coût d'un voyage entre deux ville, celui-ci change à travers le temps. Ce qui rend le problème plus difficile que le problème du voyageur du commerce. \cite{hansknecht2018cuts} propose deux formulations, l'une basée sur les arcs et l'autre basée sur les chemins. Puis, ils font l'étude de la structure  du problème et mettent en évidence certaines inégalités valides. Ils proposent ensuite, pour chaque formulation un algorithme de branch-and-bound. Les auteurs ont mis des efforts sur l'étude du problème et sur les heuristiques primitives. Les heuristiques primitives utilisées sont celle de branchement et celles de propagation. Ils se sont servis de celles se trouvants dans le solveur SCIP. Selon les résultats de leurs tests, les heuristiques primitives réduisent considérablement l'écart restant après l'ajout des inégalités.
+	    
+	    
+	    \paragraph{Problème d'affectation généralisé}
+	        Dans \cite{sadykov2018primal}, les auteurs présentent des heuristiques en profondeur adaptées pour le cas de la génération de colonne. Ces méthodes sont intégrées ensuite dans un branch-and-price. Le but étant de créer des méthodes génériques pour le branch-and-price, leurs travaux se basent sur les heuristiques primitives de \cite{fischetti2003local}, \cite{Fischetti2005}, \cite{danna2005exploring} et \cite{berthold2006}.
+	        Ils présentent cinq variantes des heuristiques en profondeur: \textit{pure diving, diving with limited backtrack, strong diving, diving with restarts, diving with sub-MIPing}, ainsi qu'une heuristique de branchement local et une adapatation de feasibiliry pump au cas de la génération de colonne. Les tests on été effectués sur le problème d'affectation généralisé. Pour rappel, dans ce problème, on a $n$ tâches qu'on veut affecter à $m$ machines. Chaque machine $i$ a une capacité $u_i$ et chaque tâche $j$ assigné à une machine $i$ utilise $d_{ij}$ ressources et coûte $c_{ij}$. Le but est d'affecter une tâche à exactement une machine de telle sorte que les total des ressources consommées par chaque machine ne dépasse pas sa capacité. Un test sur des benchmarks de la littérature issues de http://www.al.cm.is.nagoya-u.ac.jp/~yagiura/gap/ montrent que \textit{pure diving} est l'heuristique la plus rapide mais la qualité de la solution n'est pas bonne avec un pourcentage de 0\% de solutions optimales trouvées et de 70\% de solutions faisables trouvées. La meilleure étant \textit{strong diving} avec une pourcentage de 15\% de solutions optimales trouvées et 100\% de solutions faisables mais un temps d'exécution relativement plus lent (30 fois plus lente que \textit{pure diving}). Les auteurs concluent aussi que le meilleur compromis entre les deux est l'algorithme de \textit{diving with limited backtracking}, 5 fois plus lente que \textit{pure diving} mais avec 100\% de solutions faisables trouvées dont 5\% sont optimales. Une comparaison avec les résultats de \cite{Yagiura2006} montrent aussi que l'algorithme \textit{diving with limited backtracking} montrent aussi que l'algorithme est en moyenne plus rapide et donne de meilleurs résultats. Les auteurs rapportent aussi une amélioration de la meilleure solution de 10 instances de la littérature dont deux instances pour lesquelles elle trouve une solution optimale pour la première fois. 
+	        
+	    \paragraph{Problème de coloration de graphes}
+	        \cite{sadykov2018primal} continuent le tests des mêmes heuristiques citées pour le problème d'affectation généralisée avec le problème de coloration de graphes. L'objectif étant d'affecter aux noeuds d'un graphe une couleur de façon à ce que deux noeuds adjacents n'aient pas la même. On cherche minimiser le nombre de couleurs employées pour un graphe donné.
+	        Les instances utilisées sont générées au hasard pour un nombre variable de noeud dans le graphe entre 50 et 90 avec un pas de 10. Au total 125 instances ont été générées. Comme pour le problème d'affectation généralisé, \textit{pure diving} est la plus rapide mais le nombre de solutions optimales n'est que de 71\%. Ce nombre est bien inférieur par rapport à \textit{strong diving} qui donne 94\% de solutions optimales mais contre un temps d'exécution plus grand (presque 4 fois plus long que \textit{pure diving}). L'heuristique \textit{diving with limited backtracking} se situe toujours comme un compromis entre les deux avec un temps d'exécution de 1.46 fois plus long que \textit{pure diving} et 88\% de solutions optimales. En comparaison avec les méthodes de la littérature Sadykov et al. trouvent des résultats éloignés en moyenne d'une unité par rapport aux résultats optimaux. De plus, l'heuristique est plus performantes que certaines heursitiques récentes. 
+	    
+	    \paragraph{ les problèmes de bin packing}
+	       Dans le problème de bin packing, on a $n$ objets qu'on désire placer dans des boites de taille $T$. Chaque objet $i$ a $d_i$ copies de taille $t_i$. Le problème consiste à minimiser le nombre de boîtes nécessaires pour qu'à la fin, chaque objet puisse être placé dans une boîte de telle sorte que la taille total des toutes les copies assignées à une boîte ne dépasse pas $T$. Sadykov et al. traitent ce problème comme troisième exemple d'application des heuristiques en profondeur dans \cite{sadykov2018primal}. Les résultats suivent le même schéma que pour les autres problèmes. \textit{Pure diving} se distingue par sa vitesse mais néanmoins des résultats moins bons que ceux de \textit{strong diving} qui semble confirmer être la meilleure mais aussi la plus coûteuse en temps d'exécution. \textit{Diving with limited backtracking} se classe toujours en meilleur rapport temps d'éxécution/qualité des résultats avec des résultats très proches de ceux de \textit{strong diving} sur toutes les instances.
+	\section{Récapitulatif}
+	Le tableau suivant résume tous les problèmes vus dans les sections précédentes. Pour chaque problème, les heuristiques primitives employées sont mentionnées.
+	    \begin{center}
+                \begin{tabularx}{1\textwidth}{|X|X|X|}
+                    \hline
+                    Article & Problème & Heuristique(s) primitive(s) employée(s)\\ 
+                    \hline
+                    \hline
+                    \cite{Toyoda1975} & Sac à dos multidimensionnel & Gradient effectif \\  \hline
+                    \cite{Turhan2017}& Ordonnancement de l'admission des patients & Fix-and-relax \\
+                    && Fix-and-optimize\\ \hline 
+                    \cite{Alekseeva2010} & (r|p)-centroïdes discrets & Feasibility pump \\ \hline 
+                    \cite{He2015} & Le problème d'emplacement de hub & IMMIP \\ \hline
+                    \cite{hansknecht2018cuts} & Problème du voyageur du commerce & Heuristiques de branchement et de propagation de SCIP \\ \hline
+                    \cite{sadykov2018primal} & Problème d'affectation généralisé & Heuristiques en profondeur ( Pure diving, Diving with limited backtracking, Strong diving, Didiving with restarts, diving with sub-MIPing)\\
+                    &Problème de coloration de graphe& heuristique de branchement local \\
+                    &Problème de bin packing& feasibiliry pump \\ \hline
+                    
+            \end{tabularx}    
+        \end{center}
+        
+    
 	\section{Conclusion}
+	On a vu dans les sections précédentes quelques applications des heuristiques primitives sur des problèmes d'optimisation. Ces applications sont plutôt fructueuses dans la plupart des problèmes mentionnés voire même meilleures que certaines méthodes de la littérature. La plupart des applications mentionnées sont récentes ce qui tant à montrer l'émergence des heuristiques primitives dans le domaine et le vif intérêt qu'elles commencent à susciter. Pour finir, un tableau récapitulatif résume les problèmes abordés ainsi que les heuristiques primitives employés pour résoudre. 
+	La variété des problèmes traités par ces heuristiques leur permet d'être essayée sur des instances plus concrètes et donc plus difficiles que les instances dédiées aux MIPs qui n'imposent pas d'interprétation des résultats. Cela est est un point positif qui permettra des les améliorer et de toucher plus d'application qu'elles n'en traitent déjà.
+	
 	
 	\chapter*{Conclusion}
+	A travers ce travail, nous nous sommes intéressés aux méthodes exactes pour la résolution de problèmes d'optimisation. Plus particulièrement, nous avons vu les méthodes arborescentes. A travers le premier chapitre, une revue du branch-and-bound et de ses variantes à été effectué. On a pu voir les principaux choix qui s'imposent de faire pour chaque étape du branch-and-bound, que ce soit pour le choix de départ, la phase de branchement, les méthodes de parcours ou bien le calcul des bornes. Ce sont les principaux critères qui influencent le succès d'une méthode branch-and-bound. Les variantes qui ont le plus de succès sont le branch-and-cut qui incorpore les coupes planes et le branch-and-price qui lui utilise la méthode de génération de colonnes. Quelques applications fructueuses des méthodes arborescentes pour la résolution de problèmes d'optimisation ont aussi été évoquées. Une application majeure du branch-and-bound sont les MIPs. C'est pour cela que dans le chapitre deux, on a fait une revue des heuristiques simulant un arbre branch-and-bound et donnant une solution faisable de bonne qualité pour les MIP. Ce sont les heuristiques primitives. Enfin, dans le dernier chapitre, on a pu voir quelques applications des heuristiques primitives pour la résolution de problèmes d'optimisation. Ces applications montrent que les heuristiques primitives peuvent se montrer puissantes et donner des résultats concurrençant des méthodes de la littérature des problèmes étudiés. Aussi, cela montre l'importance de pouvoir modéliser un problème sous forme de MIP pour pouvoir bénéficier d'un large éventail de méthode de traitement. 
 	
+	Dans les futurs travaux, on peut étudier les heuristiques primitives dans le cas de programmes quadratiques ou non-linéaires en générales. Ils constituent une classe de problèmes plus difficiles que les MIPs. Des travaux dans ce sens ont été initié par \cite{Berthold2014} mais peuvent encore être étendu par de nouvelles méthodes. L'application de ces heuristiques aux problèmes d'optimisation serait aussi un point intéressant à aborder. Cela permettra de tester ces heuristiques sur des problèmes moins abstraits que ceux des benchmarks de la littérature.
 	
 	\newpage
 	\bibliographystyle{apacite}
