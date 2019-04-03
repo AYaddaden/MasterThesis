@@ -41,13 +41,19 @@
 
 \begin{document}
 
+    \input{title.tex}
+
     \listofalgorithms
     \listoffigures
     \tableofcontents
     \newpage
     \chapter*{Introduction générale}
+    % Ce qui motive l'étude derrière les chapitres produits
+    Les travaux en optimisation combinatoire touchent plusieurs axes de recherches tels que la programmation linéaire et non-linéaire, les méthodes reposants sur la génération de coupes ou de colonnes, les heuristiques, les métaheuristiques, les méthodes hybrides, etc. Ceux-ci trouvent beaucoup d'applications dans divers problèmes tels que l'ordonnancement, la planification, les problèmes logistique, la gestion de stock, etc. Au fil du temps et des divers travaux menés, divers idées ont émergées et touchent plusieurs aspects des méthodes d'optimisation et ceci dans le but de les rendre soit plus rapide ou bien plus précise et idéalement, les deux à la fois.
     
-	
+    L'unes des approches qui a donné le plus de succès, est l'hybridation de méthodes exactes avec des heuristiques. Une revue de cette hybridation peut être a été faire par \cite{Puchinger2005}. Cela permet de profiter des avantages des deux.
+
+    %le fait d'avoir une formulation mathématique + efficacité travaux MIP ---> 	emploi sur des pbs --> heuristiques primitives
 	\chapter{Méthodes exactes de résolution}
 	\section{Introduction}
 	La résolution de problème d'optimisation combinatoire nécessite souvent l'utilisation d'algorithmes très sophistiqués. Souvent, ces problèmes sont NP-difficile et il n'existe pas d'algorithmes polynomiaux pour leur résolution. C'est la cas par exemple du problème de sac à dos, de voyageur du commerce, de coloration de graphe, de tournée de véhicules, etc. pour lesquels une exploration exhaustive de l'espace de recherche n'est pas fructueuse. Cela nécessite donc faire une exploration intelligente de l'espace de recherche et par delà même, un choix de stratégies et de paradigmes de recherches suivant le but à atteindre. On peut donc vouloir la meilleure solution pour le problème et donc se référer aux méthodes dites \textit{"exactes"} ou bien une solution de bonne qualité et opter pour les méthodes dites \textit{"approchées"}. L'avantage des méthodes exactes est qu'elles trouvent la meilleure solution au problème mais cela au détriment d'un temps de calcul plus important. Elles sont donc privilégiées pour les petites instances. Les méthodes approchées donnent, quant à elles, une solution approximatives du problèmes tout en respectant certains critères de qualité pour la solution trouvée. Elles sont privilégiées quand le temps de calcul est borné et qu'une solution de bonne qualité seulement est suffisant. Notons aussi la combinaison des méthodes exactes et approchée est aussi un paradigme pour trouver de meilleures solutions approchées. Une revue des combinaisons de méthodes exactes et approchées peut être trouvée dans \cite{Puchinger2005}. 
