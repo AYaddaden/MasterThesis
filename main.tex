@@ -51,7 +51,11 @@
     % Ce qui motive l'étude derrière les chapitres produits
     Les travaux en optimisation combinatoire touchent plusieurs axes de recherches tels que la programmation linéaire et non-linéaire, les méthodes reposants sur la génération de coupes ou de colonnes, les heuristiques, les métaheuristiques, les méthodes hybrides, etc. Ceux-ci trouvent beaucoup d'applications dans divers problèmes tels que l'ordonnancement, la planification, les problèmes logistique, la gestion de stock, etc. Au fil du temps et des divers travaux menés, divers idées ont émergées et touchent plusieurs aspects des méthodes d'optimisation et ceci dans le but de les rendre soit plus rapide ou bien plus précise et idéalement, les deux à la fois.
     
-    L'unes des approches qui a donné le plus de succès, est l'hybridation de méthodes exactes avec des heuristiques. Une revue de cette hybridation peut être a été faire par \cite{Puchinger2005}. Cela permet de profiter des avantages des deux.
+    L'une des approches qui a donné le plus de succès, est l'hybridation de méthodes exactes avec des heuristiques. Une revue de cette hybridation peut être a été faire par \cite{Puchinger2005}. Cela permet de profiter des avantages des deux. D'un côté les méthodes exactes garantissent des solution de très bonnes qualité et de l'autre, les heuristiques garantissent la rapidité d'exécution. Souvent, les problème auxquels on a affaire ont une formulation mathématique. On peut alors être amené à profiter des travaux fait sur le programmation linéaire et les adapter au problème. Les heuristiques primitives constituent une part fondamentale de la programmation linéaire et constitue l'un des principaux schémas d'hybridation entre méthodes exactes et heuristiques. Le schéma de parcours étant, le plus souvent dans ce cas, une méthode exacte arborescente dans laquelle est appelée une de ces heuristiques primitives.
+    
+    Dans cette optique, il serait intéressant d'aborder les méthodes exactes arborescentes existantes pour la résolution de problèmes d'optimisation et progressivement de voir les heuristiques primitives et quelques aspects de la programmation linéaires. Il serait aussi pertinent, dans la suite, de montrer la relation entre les heuristiques primitives et les méthodes exactes et quelques cas d'utilisation concrets en dehors des programmes linéaires abstraits. Il est à souligner que les contraintes modélisant un aspect du problème qu'on cherche à optimiser  rendent la résolution plus difficile, d'où l'intérêt de se pencher sur ce cas. 
+    
+    Dans ce mémoire, tous les aspects précédents seront abordés avec un premier chapitre sur les méthodes exactes arborescentes de résolution de problèmes d'optimisation. Dans le deuxième chapitre, on verra les heuristiques primitives. On verra aussi comment elles simulent un arbre branch-and-bound et comment elle s'incorporent bien dans les méthodes arborescentes. Dasn le dernier chapitre, on fera une sythèse de travaux dans lesquels les heuristiques primitives ont été utilisées pour résoudre des problèmes d'optimisation. Ceci permettra de confirmer ou d'infirmer l'utilité de celles-ci dans le processus de résolution. 
 
     %le fait d'avoir une formulation mathématique + efficacité travaux MIP ---> 	emploi sur des pbs --> heuristiques primitives
 	\chapter{Méthodes exactes de résolution}
@@ -1259,7 +1263,7 @@
 	
 	Cette mesure à été testée par \cite{Achterberg2012} et par \cite{Berthold2013} sur des instances de la littérature pour mesurer l'effet des heuristiques primitives sur le processus de résolution de MIP. \cite{Berthold2013} que l'utilisation des heuristiques primitives sur ces instances améliore le résultat de 78.8 \% pour le solveur SCIP et de 86.5 \% pour IBM \textsc{Cplex}. Dans \cite{Achterberg2012}, les auteurs concluent qu'hybrider des heuristiques primitives coûteuses en temps avec d'autres pas très gourmandes en temps d'exécution donne de meilleurs résultats qu'utiliser des heuristiques coûteuses toutes seules. Ce dernier s'avère aussi meilleur qu'utiliser des heuristiques pas coûteuses en temps. Ils tirent aussi la même conclusion que précédemment, à savoir, qu'utiliser des heuristiques primitives donne de meilleure résultats que ne pas les utiliser. Cette mesure est aussi reprise dans \cite{Khalil2017} où le but est de trouver un moyen de prédire où et quand il serait intéressant de lancer une heuristique primitive dans un arbre branch and bound. Le modèle présenter fait appel à des techniques d'apprentissage (\text{Machine learning}) pour mesurer l'effet de l'appel de l'heuristique sur le un nœud donné.
 	     
-	\section{Résultats des tests et comparaison entre les heuristiques primitives}
+	%\section{Résultats des tests et comparaison entre les heuristiques primitives}
 	
 	% a la fin, fournir un tableau récapitulatif de tout ce qui a été dit sur les heuristiques primitives.
 	
@@ -1282,12 +1286,40 @@
 
     
 	\section{Heuristiques primitives dans les problèmes de tournées}
+	    Les problèmes de tournées de véhicules désignent une classe de problèmes où l'on considère un ensemble de \textit{clients} et un ensemble de \textit{véhicules} situés dans un ou plusieurs \textit{dépots} répartis. Les clients, situés géographiquement à une certaines distance les uns des autres, sont reliés par un réseau de routes. Le but du problème est de déterminer un ensemble optimal de routes (chaque route sera alors appelée \textit{tournée} ) que devront parcourir les véhicules pour desservir les clients tout en minimisant une certaine quantité. Cette quantité à minimiser est généralement le nombre de véhicules à utiliser ou bien le coût de chaque tournée.
+	    Les heuristiques primivites sont abordées dans les travaux de \cite{Agra2014}, \cite{Cacchiani2014} et \cite{Bettinelli2014}.
 	    
-	\section{Heuristiques primitives dans les problèmes de conception de réseaux}
-	
-	
+	    Dans \cite{Cacchiani2014}, les auteurs présentent une méthode hybride à case d'heuristiques et de méthode exacte dans un schéma de génération de colonne. Leur algorithme consiste en une résolution par heuristique du problème maître restreint suivi d'une recherche locale. Ensuite, une procédure pour fixer les variable est exécutée. Les auteurs ont choisi de fixer définitivement les variables qui sont à 1 dans la solution partielle obtenue. Les routes qui deviennent interdites dans la solution sont ensuite propagée pour les prochaines itérations. Les résultats obtenus sont concluants et compétitifs par rapport à la littérature. De nouvelles solutions ont même été identifiées pour certaines instances du problème.
+	    
+	    \cite{Bettinelli2014} proposent un algorithme de branch-and-price pour la variante avec ramassage et livraison et fenêtre de temps. L'heuristique primitive introduite est un algorithme glouton assez simple. L'algorithme commence avec une route vide et sélectionne un véhicule au hasard. Les clients sont sélectionnés selon le fait qu'il augmentent le moins possible le coup total du problème. Les colonnes ainsi trouvés par l'algorithme constituent une initialisation pour le problème maître restreint dans la phase de génération de colonne. 
+	    
+	    \cite{Agra2014} considèrent le problème d'acheminement de stock à courte distance dans l'archipel du Cap-Vert. Ce problème traite l'acheminement et la planification des flottes de navires de pétrole entre les ports de sorte à ce que l'acheminement des produits soit satisfait sous des contraintes de temps. L'objectif est de déterminer les politiques de distribution qui minimisent les coûts de routage et d'exploitation, tout en maintenant les niveaux de stock dans leurs limites. \cite{Agra2014} utilisent une hybridation de trois heuristiques. L'heuristique \textit{Rolling horizon} considère découpe l'horizon de planification en des sous-horizons et résoud une MIP pour chaque sous-horizon. Les heuristiques primitives introduites sont \textit{Local branching} de \cite{fischetti2003local} et \textit{Feasibility Pump}  de \cite{Fischetti2005}. La première hybridation concerne \textit{Rolling Horizon} et \textit{Local Branching}. Plusieurs versions de \textit{Local branching} ont été testées, toutes diffèrent dans la manière les auteurs approchent le sous-problème. Dans la première version, la résolution du sous-problème est stoppée à la première solution trouvée. Par contre, dans la deuxième, le sous-problèmes est résolu deux fois, une première fois jusqu'à réduire un écart défini par: 
+	    \begin{gather} \label{gap}
+	        g = 100 \times \frac{UB-LB}{LB} \hspace{10pt}
+	    \end{gather}
+	    (où $UB$ est la meilleure borne supérieure et $LB$ est la meilleure borne inférieure)    
+	     est réduit à 10 \% . Dans la  deuxième résolution, une contrainte défini par les auteurs est ajoutée puis l'heuristique primitive est lancée jusqu'à atteidre un écart $g$ de 5 \%. La troisième version développée ressemble à la deuxième sauf que l'on fait plus appel à la contrainte défini par les auteurs et que le critère d'arrêt est soit une limite temporelle, soit un nombre d'itération atteints sans amélioration ou bien un nombre maximal d'itération global.
+	    Dans l'algorithme de \textit{Feasiblity pump}, les auteurs se sont intéressés à modifier quelques phases de l'algorithme de \cite{Fischetti2005} pour l'adapter au problème. La stratégie d'arrondissement est défini par 
+	    \begin{gather}
+	        x = \begin{cases}
+	            1  & \text{si} \hspace{5pt} x \textgreater 0.5 \\
+	            0 & \text{si} \hspace{5pt} x \textless \epsilon
+	        \end{cases}
+	    \end{gather}
+	    Dans les tests, $\epsilon = 0.1$.
+	    Ils ont introduit ensuite une fonction de distance en tenant compte des caractéristiques du problème. La perturbation introduite en cas de cycles est inspirée de celle introduite par \cite{Achterberg2007}.Dans la phase de test, \cite{Agra2014} ont fait beaucoup de combinaisons deux à deux des heuristiques et même une combinaison des trois heuristiques. Cette dernière s'est avéré être la plus fructueuse et donne les meilleurs résultats.
+	  
+	    
+	   
+	   
+	   
 	\section{Heuristiques primitives dans les autres problèmes d'optimisation}
-	    Hors les trois derniers problèmes mentionnés pour laquelle il y a eu plus de littérature, il existe certaines autres applications encore isolées pour des problèmes d'optimisation. Elles sont toutes récentes compte tenu du fait que les heuristiques primitives sont en émergence. C'est pour cela qu'il devient intéressant de constater  l'étendue de l'efficacité de ces heuristiques appliquées à ces problèmes.
+	    Hors les problèmes mentionnés pour laquelle il y a eu plus de littérature, il existe certaines autres applications encore isolées pour des problèmes d'optimisation. Elles sont toutes récentes compte tenu du fait que les heuristiques primitives sont en émergence. C'est pour cela qu'il devient intéressant de constater  l'étendue de l'efficacité de ces heuristiques appliquées à ces problèmes.
+	
+	    \paragraph{Heuristiques primitives dans les problèmes de conception de réseaux}
+	
+    	   Dans le problème de conception de réseau , on se donne un réseau représenté par un graphe avec des coûts non négatifs sur les arcs. On essaie d'acheminer un ensemble $D$ de demandes via le réseau au moindre coût.\cite{buchheim2011exact} présent un algorithme de Branch-and-cut. Les heuristiques primitives utilisées dans le problèmes sont des heuristiques d'arrondissement propres aux données du problème. Les auteurs fournissent les résultats obtenus par la fonction écart $g$ telle que défini dans \ref{gap}. Dans 458 \% des cas, $g \textless 10\%$ et dans 55 \% des cas, $g \textgreater 10 \%$ avec un taux au pire des cas de $61\%$. Ce qui est un très bon score pour ces heuristiques. Les conclusions des auteurs valident leur méthode puisqu'ils arrivent à résoudre toutes les instances réalistes à optimalité.
+    	
 	    
 	    \paragraph{Ordonnancement de l'admission des patients}
 	    
@@ -1333,20 +1365,25 @@
 	\section{Récapitulatif}
 	Le tableau suivant résume tous les problèmes vus dans les sections précédentes. Pour chaque problème, les heuristiques primitives employées sont mentionnées.
 	    \begin{center}
-                \begin{tabularx}{1\textwidth}{|X|X|X|}
+                \begin{tabularx}{1\textwidth}{|X|X|X|X|}
                     \hline
-                    Article & Problème & Heuristique(s) primitive(s) employée(s)\\ 
+                    Article & Problème & Heuristique(s) primitive(s) employée(s) & Année\\ 
                     \hline
                     \hline
-                    \cite{Toyoda1975} & Sac à dos multidimensionnel & Gradient effectif \\  \hline
-                    \cite{Turhan2017}& Ordonnancement de l'admission des patients & Fix-and-relax \\
-                    && Fix-and-optimize\\ \hline 
-                    \cite{Alekseeva2010} & (r|p)-centroïdes discrets & Feasibility pump \\ \hline 
-                    \cite{He2015} & Le problème d'emplacement de hub & IMMIP \\ \hline
-                    \cite{hansknecht2018cuts} & Problème du voyageur du commerce & Heuristiques de branchement et de propagation de SCIP \\ \hline
-                    \cite{sadykov2018primal} & Problème d'affectation généralisé & Heuristiques en profondeur ( Pure diving, Diving with limited backtracking, Strong diving, Didiving with restarts, diving with sub-MIPing)\\
-                    &Problème de coloration de graphe& heuristique de branchement local \\
-                    &Problème de bin packing& feasibiliry pump \\ \hline
+                    \cite{Toyoda1975} & Sac à dos multidimensionnel & Gradient effectif & 1975\\  \hline
+                    \cite{Turhan2017}& Ordonnancement de l'admission des patients & Fix-and-relax & 2017 \\
+                    && Fix-and-optimize & 2017\\ \hline 
+                    \cite{Alekseeva2010} & (r|p)-centroïdes discrets & Feasibility pump & 2010\\ \hline 
+                    \cite{He2015} & Le problème d'emplacement de hub & IMMIP & 2015 \\ \hline
+                    \cite{hansknecht2018cuts} & Problème du voyageur du commerce & Heuristiques de branchement et de propagation de SCIP & 2018  \\ \hline
+                    \cite{sadykov2018primal} & Problème d'affectation généralisé & Heuristiques en profondeur ( Pure diving, Diving with limited backtracking, Strong diving, Didiving with restarts, diving with sub-MIPing) & 2018\\
+                    &Problème de coloration de graphe& heuristique de branchement local & 2018\\
+                    &Problème de bin packing& feasibiliry pump & 2018 \\ \hline
+                     \cite{Cacchiani2014} & Problème de tournée de véhicule & Heuristique de fixation & 2014 \\ \hline
+                     \cite{Bettinelli2014}& Problème de tournée de véhicule & Algorithme glouton & 2014 \\ \hline
+                     \cite{Agra2014} & Problème d'acheminement de stock à courte & \textit{Feasibility pump} & 2014 \\
+                     & &  \textit{Local branching} & \\ \hline
+                     \cite{buchheim2011exact} & Le problème de conception de réseau & \textit{Heuristiques d'arrondissement} & 2011 \\ \hline
                     
             \end{tabularx}    
         \end{center}
